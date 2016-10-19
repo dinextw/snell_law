@@ -9,7 +9,7 @@
 #ifndef snell_angle_adjust_hpp
 #define snell_angle_adjust_hpp
 
-#include "TCoordinate.hpp"
+#include "coordinate.h"
 
 class SnellAngleAdjust
 {
@@ -19,9 +19,9 @@ private:
     double speed_cell1, speed_cell2;
     
 public:
-    SnellAngleAdjust(TVector velocity_cell1, speed_cell1, speed_cell2, norm_plane) : velocity_in(velocity_cell1), speed_cell1(speed_cell1), speed_cell2(speed_cell2), norm_plane(norm_plane){};
-    TVector ComputeRefractedVelocity();
-}
+    SnellAngleAdjust() : speed_cell1(0), speed_cell2(0){};
+    TVector ComputeRefractedVelocity(TVector velocity_cell1, TVector norm_plane_vector, double speed_in, double speed_out);
+};
 
 
 #endif /* snell_angle_adjust_hpp */
