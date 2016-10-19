@@ -35,8 +35,8 @@
 		<Unit filename="coordinate.hpp" />
 		<Unit filename="cuboid.cpp" />
 		<Unit filename="cuboid.hpp" />
-		<Unit filename="cuboid_list.cpp" />
-		<Unit filename="cuboid_list.h" />
+		<Unit filename="grids.cpp" />
+		<Unit filename="grids.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />
