@@ -20,7 +20,13 @@ TVector ComputeRefractedVelocity(){
         velocity_out = (velocity_in * r + norm_plane * coeff) * speed_cell2;
     }
     else{//Total Reflection
-        //要想一下該怎麼寫向量反向
+        velocity_out = velocity_in;
+        if (norm_plane.x ~= 0)
+            velocity_out.x = -velocity_out.x;
+        else if(norm_plane.y ~= 0)
+            velocity_out.y = -velocity_out.y;
+        else
+            velocity_out.z = -velocity_out.z;
     }
     
     
