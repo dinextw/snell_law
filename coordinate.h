@@ -20,10 +20,38 @@ public:
     TVector(const TVector &src) : x(src.x), y(src.y), z(src.z) {}
 
 public:
-    TVector& operator +=(const TVector &v);
-    TVector& operator -=(const TVector &v);
-    TVector& operator *=(double s);
-    TVector& operator /=(double s);
+
+    inline TVector& operator +=(const TVector &v)
+    {
+        x += v.x;
+        y += v.y;
+        z += v.z;
+        return *this;
+    }
+
+    inline TVector& operator -=(const TVector &v)
+    {
+        x -= v.x;
+        y -= v.y;
+        z -= v.z;
+        return *this;
+    }
+
+    inline TVector& operator *=(double s)
+    {
+        x *= s;
+        y *= s;
+        z *= s;
+        return *this;
+    }
+
+    inline TVector& operator /=(double s)
+    {
+        x /= s;
+        y /= s;
+        z /= s;
+        return *this;
+    }
 
 public:
     double Abs() const;
@@ -42,11 +70,35 @@ typedef TVector TCoordinate;
 /*
  * Global operators.
  */
-TVector operator +(const TVector &a, const TVector &b);
-TVector operator -(const TVector &a, const TVector &b);
-TVector operator *(const TVector &v, double s);
-TVector operator *(double s, const TVector &v);
-TVector operator /(const TVector &v, double s);
-TVector operator /(double s, const TVector &v);
+
+inline TVector operator +(const TVector &a, const TVector &b)
+{
+    return TVector( a.x + b.x, a.y + b.y, a.z + b.z );
+}
+
+inline TVector operator -(const TVector &a, const TVector &b)
+{
+    return TVector( a.x - b.x, a.y - b.y, a.z - b.z );
+}
+
+inline TVector operator *(const TVector &v, double s)
+{
+    return TVector( v.x * s, v.y * s, v.z * s );
+}
+
+inline TVector operator *(double s, const TVector &v)
+{
+    return TVector( s * v.x, s * v.y, s * v.z );
+}
+
+inline TVector operator /(const TVector &v, double s)
+{
+    return TVector( v.x / s, v.y / s, v.z / s );
+}
+
+inline TVector operator /(double s, const TVector &v)
+{
+    return TVector( s / v.x, s / v.y, s / v.z );
+}
 
 #endif
