@@ -4,6 +4,8 @@
 #ifndef _COORDINATE_H_
 #define _COORDINATE_H_
 
+#include <math.h>
+
 /**
  * Vector.
  */
@@ -54,11 +56,35 @@ public:
     }
 
 public:
-    double Abs() const;
-    double Abs2() const;
-    TVector Unit() const;
-    double Dot(const TVector &v) const ;
-    TVector Cross(const TVector &v) const ;
+
+    inline double Abs2() const
+    {
+        // Calculate the absolute value to the power of 2.
+        return x*x + y*y + z*z;
+    }
+
+    inline double Abs() const
+    {
+        return sqrt(Abs2());
+    }
+
+    inline TVector Unit() const
+    {
+        double abs_value = Abs();
+        return TVector( x / abs_value, y / abs_value, z / abs_value );
+    }
+
+    inline double Dot(const TVector &v) const
+    {
+        return x * v.x + y * v.y + z * v.z;
+    }
+
+    inline TVector Cross(const TVector &v) const
+    {
+        return TVector(y * v.z - z * v.y,
+                       z * v.x - x * v.z,
+                       x * v.y - y * v.x);
+    }
 
 };
 
