@@ -127,4 +127,9 @@ inline TVector operator /(double s, const TVector &v)
     return TVector( s / v.x, s / v.y, s / v.z );
 }
 
+inline TVector operator -(const TVector &v)
+{
+    return TVector( -v.x, -v.y, -v.z );
+}
+
 #endif
