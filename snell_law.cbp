@@ -32,7 +32,7 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="coordinate.h" />
+		<Unit filename="coordinate.hpp" />
 		<Unit filename="cuboid.cpp" />
 		<Unit filename="cuboid.hpp" />
 		<Unit filename="cuboid_list.cpp" />

@@ -1,8 +1,8 @@
 /**
  * Cartesian coordinate point.
  */
-#ifndef _COORDINATE_H_
-#define _COORDINATE_H_
+#ifndef _COORDINATE_HPP_
+#define _COORDINATE_HPP_
 
 #include <math.h>
 
