@@ -37,7 +37,7 @@ public:
 };
 
 template <typename T>
-vector<size_t> sort_indexes(const vector<T> &v)
+vector<size_t> SortIndexes(const vector<T> &v)
 {
     
     // initialize original index locations

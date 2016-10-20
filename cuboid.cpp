@@ -76,7 +76,7 @@ pair <TCoordinate, TVector> Cuboid::ComputePath(TCoordinate position_in, TVector
     distance[4] = distance_z_high;
     distance[5] = distance_z_low;
     
-    index_distance = sort_indexes(distance);
+    index_distance = SortIndexes(distance);
     //Output Location
     switch (index_distance[5]) {
         case 0:
