@@ -30,9 +30,25 @@ private:
 
 public:
     Cuboid()
-    : x_low(0), x_high(0), y_low(0), y_high(0), z_low(0), z_high(0), speed(0) {};
-    void SetValue(double x_low_in, double x_high_in, double y_low_in, double y_high_in, double z_low_in, double z_high_in, double speed_in);
-    pair <TCoordinate, TVector> ComputePath(TCoordinate position_in, TVector velocity_in);
+        : x_low(0),
+          x_high(0),
+          y_low(0),
+          y_high(0),
+          z_low(0),
+          z_high(0),
+          speed(0)
+    {
+    }
+
+    void SetValue(double x_low_in,
+                  double x_high_in,
+                  double y_low_in,
+                  double y_high_in,
+                  double z_low_in,
+                  double z_high_in,
+                  double speed_in);
+
+    pair<TCoordinate, TVector> ComputePath(TCoordinate position_in, TVector velocity_in);
 
 
 };
