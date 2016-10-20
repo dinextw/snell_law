@@ -6,10 +6,10 @@
 //
 //
 
-#ifndef snell_angle_adjust_hpp
-#define snell_angle_adjust_hpp
+#ifndef snell_adjust_hpp
+#define snell_adjust_hpp
 
-#include "coordinate.h"
+#include "coordinate.hpp"
 
 class SnellAngleAdjust
 {
@@ -24,4 +24,4 @@ public:
 };
 
 
-#endif /* snell_angle_adjust_hpp */
+#endif /* snell_adjust_hpp */
