@@ -1,6 +1,6 @@
-cells-boundaries-x: 00.00 10.00 20.00 30.00
-cells-boundaries-y: 00.00 20.00 40.00 60.00
-cells-boundaries-z: 00.00 05.00 10.00 15.00
+boundary-points-x: 00.00 10.00 20.00 30.00
+boundary-points-y: 00.00 20.00 40.00 60.00
+boundary-points-z: 00.00 05.00 10.00 15.00
 
 01.00 02.00 03.00
 04.00 05.00 06.00
