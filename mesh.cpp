@@ -20,6 +20,18 @@ void TMesh::Clear()
 }
 
 static
+bool CheckBoundariesOrder(const vector<double> &points)
+{
+    for(unsigned i=1; i<points.size(); ++i)
+    {
+        if( points.at(i-1) > points.at(i) )
+            return false;
+    }
+
+    return true;
+}
+
+static
 void ReadBoundriesPoints(stringstream &stream, vector<double> &points)
 {
     points.clear();
@@ -32,6 +44,9 @@ void ReadBoundriesPoints(stringstream &stream, vector<double> &points)
 
         points.push_back(value);
     }
+
+    if( !CheckBoundariesOrder(points) )
+        throw runtime_error("Boundary points order error!");
 }
 
 static
