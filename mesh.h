@@ -1,14 +1,14 @@
 /*
- * Computation grids.
+ * Computation mesh.
  */
-#ifndef _GRIDS_H_
-#define _GRIDS_H_
+#ifndef _MESH_H_
+#define _MESH_H_
 
 #include <string>
 #include "coordinate.hpp"
 #include "cuboid.hpp"
 
-class TGrids
+class TMesh
 {
 public:
     bool LoadFile(const std::string &filename, bool verbose);

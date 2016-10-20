@@ -1,2 +1,2 @@
-g++ -o snell_law main.cpp cuboid.cpp grids.cpp && \
+g++ -o snell_law main.cpp cuboid.cpp mesh.cpp && \
 ./snell_law
