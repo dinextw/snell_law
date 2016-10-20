@@ -7,24 +7,24 @@
 //
 #include "cuboid.hpp"
 
-void Cuboid::SetValue(double x_low_in,
-                      double x_high_in,
-                      double y_low_in,
-                      double y_high_in,
-                      double z_low_in,
-                      double z_high_in,
-                      double speed_in)
+void Cuboid::SetValue(double x_low,
+                      double x_high,
+                      double y_low,
+                      double y_high,
+                      double z_low,
+                      double z_high,
+                      double speed)
 {
-    x_low = x_low_in;
-    x_high = x_high_in;
+    this->x_low = x_low;
+    this->x_high = x_high;
 
-    y_low = y_low_in;
-    y_high = y_high_in;
+    this->y_low = y_low;
+    this->y_high = y_high;
 
-    z_low = z_low_in;
-    z_high = z_high_in;
+    this->z_low = z_low;
+    this->z_high = z_high;
 
-    speed = speed_in;
+    this->speed = speed;
 }
 
 pair<TCoordinate, TVector> Cuboid::ComputePath(TCoordinate position_in, TVector velocity_in)

@@ -40,13 +40,13 @@ public:
     {
     }
 
-    void SetValue(double x_low_in,
-                  double x_high_in,
-                  double y_low_in,
-                  double y_high_in,
-                  double z_low_in,
-                  double z_high_in,
-                  double speed_in);
+    void SetValue(double x_low,
+                  double x_high,
+                  double y_low,
+                  double y_high,
+                  double z_low,
+                  double z_high,
+                  double speed);
 
     pair<TCoordinate, TVector> ComputePath(TCoordinate position_in, TVector velocity_in);
 
