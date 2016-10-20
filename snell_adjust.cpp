@@ -6,7 +6,7 @@
 //
 //
 
-#include "snell_angle_adjust.hpp"
+#include "snell_adjust.hpp"
 
 TVector SnellAngleAdjust::ComputeRefractedVelocity(TVector velocity_cell1, TVector norm_plane_vector, double speed_in, double speed_out)
 {
