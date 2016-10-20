@@ -8,7 +8,7 @@ using namespace std;
 
 unsigned TMesh::GetSpeedIndexByPositionIndex(unsigned x, unsigned y, unsigned z) const
 {
-    return ( z*GetCountY() + y )*GetCountX() + x;
+    return ( z*CountCellsY() + y )*CountCellsX() + x;
 }
 
 void TMesh::Clear()
@@ -114,10 +114,10 @@ bool TMesh::LoadFile(const string &filename, bool verbose)
     return true;
 }
 
-bool TMesh::GetCellByIndex(unsigned x, unsigned y, unsigned z, Cuboid &cell) const
+Cuboid TMesh::GetCellByIndex(unsigned x, unsigned y, unsigned z) const
 {
 }
 
-bool TMesh::GetCellByPoint(const TCoordinate &point, Cuboid &cell) const
+Cuboid TMesh::GetCellByPoint(const TCoordinate &point) const
 {
 }

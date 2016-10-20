@@ -23,13 +23,14 @@ protected:
 public:
     void Clear();
 
-    inline unsigned GetCountX() const { return boundaries_x.size() ? boundaries_x.size() - 1 : 0; }
-    inline unsigned GetCountY() const { return boundaries_y.size() ? boundaries_y.size() - 1 : 0; }
-    inline unsigned GetCountZ() const { return boundaries_z.size() ? boundaries_z.size() - 1 : 0; }
+    inline unsigned CountCellsX() const { return boundaries_x.size() ? boundaries_x.size() - 1 : 0; }
+    inline unsigned CountCellsY() const { return boundaries_y.size() ? boundaries_y.size() - 1 : 0; }
+    inline unsigned CountCellsZ() const { return boundaries_z.size() ? boundaries_z.size() - 1 : 0; }
 
     bool LoadFile(const std::string &filename, bool verbose);
-    bool GetCellByIndex(unsigned x, unsigned y, unsigned z, Cuboid &cell) const;
-    bool GetCellByPoint(const TCoordinate &point, Cuboid &cell) const;
+
+    Cuboid GetCellByIndex(unsigned x, unsigned y, unsigned z) const;
+    Cuboid GetCellByPoint(const TCoordinate &point) const;
 
 };
 
