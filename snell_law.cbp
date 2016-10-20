@@ -38,6 +38,8 @@
 		<Unit filename="main.cpp" />
 		<Unit filename="mesh.cpp" />
 		<Unit filename="mesh.h" />
+		<Unit filename="snell_adjust.cpp" />
+		<Unit filename="snell_adjust.hpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
