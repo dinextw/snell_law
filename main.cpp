@@ -1,4 +1,4 @@
-#include "coordinate.hpp"
+#include "grids.h"
 
 int main(int argc, char *argv[])
 {
