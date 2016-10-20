@@ -146,6 +146,23 @@ Cuboid TMesh::GetCellByIndex(unsigned x, unsigned y, unsigned z) const
     return cell;
 }
 
+static
+unsigned FindArraySectionByValue(const vector<double> &points, double value)
+{
+    if( points.empty() ) throw out_of_range(__func__);
+
+    for(unsigned i = 0; i < points.size() - 1; ++i)
+    {
+        if( points.at(i) <= value && value <= points.at(i+1) )
+            return i;
+    }
+
+    throw out_of_range(__func__);
+}
+
 Cuboid TMesh::GetCellByPoint(const TCoordinate &point) const
 {
+    return GetCellByIndex(FindArraySectionByValue(boundaries_x, point.x),
+                          FindArraySectionByValue(boundaries_y, point.y),
+                          FindArraySectionByValue(boundaries_z, point.z));
 }
