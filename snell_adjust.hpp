@@ -20,6 +20,8 @@ private:
 
 public:
     SnellAngleAdjust() : speed_cell1(0), speed_cell2(0){};
+
+public:
     TVector ComputeRefractedVelocity(TVector velocity_cell1,
                                      TVector norm_plane_vector,
                                      double  speed_in,
