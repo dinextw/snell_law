@@ -1,7 +1,15 @@
 #include <iostream>
+#include <sstream>
 #include "mesh.h"
 
 using namespace std;
+
+string ToString(const TVector &v)
+{
+    stringstream stream;
+    stream << "(" << v.x << "," << v.y << "," << v.z << ")";
+    return stream.str();
+}
 
 int main(int argc, char *argv[])
 {
@@ -18,30 +26,30 @@ int main(int argc, char *argv[])
 
         TCoordinate source(10, 22, 6);
         TVector direction(10, 16, 3);
-        cout << "  Source : (" << source.x << "," << source.y << "," << source.z << ")" << endl;
-        cout << "  Direction : (" << direction.x << "," << direction.y << "," << direction.z << ")" << endl;
+        cout << "  Source : " << ToString(source) << endl;
+        cout << "  Direction : " << ToString(direction) << endl;
 
         auto result = cell.ComputePath(source, direction);
 
         TCoordinate destination = result.first;
         TVector plane = result.second;
-        cout << "  Destination : (" << destination.x << "," << destination.y << "," << destination.z << ")" << endl;
-        cout << "  Plane normal : (" << plane.x << "," << plane.y << "," << plane.z << ")" << endl;
+        cout << "  Destination : " << ToString(destination) << endl;
+        cout << "  Plane normal : " << ToString(plane) << endl;
     }
     {
         cout << "Cuboid path calculate:" << endl;
 
         TCoordinate source(20, 38, 9);
         TVector direction(-10, -16, -3);
-        cout << "  Source : (" << source.x << "," << source.y << "," << source.z << ")" << endl;
-        cout << "  Direction : (" << direction.x << "," << direction.y << "," << direction.z << ")" << endl;
+        cout << "  Source : " << ToString(source) << endl;
+        cout << "  Direction : " << ToString(direction) << endl;
 
         auto result = cell.ComputePath(source, direction);
 
         TCoordinate destination = result.first;
         TVector plane = result.second;
-        cout << "  Destination : (" << destination.x << "," << destination.y << "," << destination.z << ")" << endl;
-        cout << "  Plane normal : (" << plane.x << "," << plane.y << "," << plane.z << ")" << endl;
+        cout << "  Destination : " << ToString(destination) << endl;
+        cout << "  Plane normal : " << ToString(plane) << endl;
     }
 
     return 0;
