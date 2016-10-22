@@ -58,6 +58,10 @@ public:
                   double z_high,
                   double speed);
 
+    TCoordinate GetLowBound() const { return TCoordinate(x_low, y_low, z_low); }
+    TCoordinate GetHighBound() const { return TCoordinate(x_high, y_high, z_high); }
+    double      GetSpeed() const { return speed; }
+
     pair<TCoordinate, TVector> ComputePath(TCoordinate position_in, TVector velocity_in);
 
 

@@ -42,6 +42,33 @@ void CuboidPathTest(Cuboid             cell,
     cout << endl;
 }
 
+void PrintMeshData(const TMesh &mesh)
+{
+    cout << "Mesh data:" << endl;
+
+    cout << "  Dimension : (" << mesh.CountCellsX() << ","
+                              << mesh.CountCellsY() << ","
+                              << mesh.CountCellsZ() << ")" << endl;
+
+    cout << "  Points:" << endl;
+    for(unsigned z = 0; z < mesh.CountCellsZ(); ++z)
+    {
+        for(unsigned y = 0; y < mesh.CountCellsY(); ++y)
+        {
+            for(unsigned x = 0; x < mesh.CountCellsX(); ++x)
+            {
+                Cuboid cell = mesh.GetCellByIndex(x, y, z);
+                cout << "    Point " << x << ", " << y << ", " << z << endl;
+                cout << "      Low bound: " << ToString(cell.GetLowBound()) << endl;
+                cout << "      High bound: " << ToString(cell.GetHighBound()) << endl;
+                cout << "      Speed: " << cell.GetSpeed() << endl;
+            }
+        }
+    }
+
+    cout << endl;
+}
+
 void TestPathTrack(const TMesh       &mesh,
                    const TCoordinate &start,
                    const TVector     &direction,
@@ -91,10 +118,7 @@ int main(int argc, char *argv[])
     // Load test mesh.
     TMesh mesh;
     cout << "Load mesh file : " << mesh.LoadFile("test_speed_profile", true) << endl;
-    cout << "Mesh dimension : (" << mesh.CountCellsX() << ","
-                                 << mesh.CountCellsY() << ","
-                                 << mesh.CountCellsZ() << ")" << endl;
-    cout << endl;
+    PrintMeshData(mesh);
 
     // Travel path track test.
     TestPathTrack(mesh,

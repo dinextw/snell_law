@@ -39,8 +39,7 @@ list<TTravelPoint> TrackPath(const TMesh       &mesh,
         auto next = cell.ComputePath(curr_point, curr_way);
         TCoordinate next_point = next.first;
 
-        #warning Temporary set speed to a value because we cannot get speed from cell now!
-        path.back().speed_to_next = 1;
+        path.back().speed_to_next = cell.GetSpeed();
         path.push_back(TTravelPoint(next_point, 0));
 
         curr_point = next_point;
