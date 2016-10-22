@@ -38,7 +38,7 @@ public:
     {
     }
 
-    Cuboid(const TCoordinate &low_bound, const TCoordinate &high_bound, bool speed)
+    Cuboid(const TCoordinate &low_bound, const TCoordinate &high_bound, double speed)
         : x_low(low_bound.x),
           y_low(low_bound.y),
           z_low(low_bound.z),
