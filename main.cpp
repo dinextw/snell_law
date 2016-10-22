@@ -128,14 +128,14 @@ int main(int argc, char *argv[])
                   TCoordinate(30, 10, 0));
     
     // Cuboid test
-    Cuboid Test;
+    Cuboid test;
     TCoordinate position_in(0,0,0);
-    TVector velocity_in(1,1,-1);
-    pair<TCoordinate, TVector> output;
-    Test.SetValue(0, 10, 0, 10, 0, 10, 3);
-    output = Test.ComputePath(position_in, velocity_in);
-    cout << output.first.x << "," << output.first.y << "," << output.first.z << endl;;
-
+    TVector velocity_in(0.8,0.6,0.5);
+    pair<TCoordinate, TVector> result;
+    test.SetValue(0, 10, 0, 10, 0, 10, 3);
+    result = test.ComputePath(position_in, velocity_in);
+    cout << result.first.x << "," << result.first.y << "," << result.first.z << endl;
+    cout << result.second.x << "," << result.second.y << "," << result.second.z << endl;
     
     // Snell adjust test
     SnellAngleAdjust test;

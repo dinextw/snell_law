@@ -16,21 +16,84 @@
 
 using namespace std;
 
-static bool IsParallel(const TVector a, const TVector b)
+static bool CheckZeroDim(const TVector a)
 {
-    double scalar_x = a.x / b.x;
-    double scalar_y = a.y / b.y;
-    double scalar_z = a.z / b.z;
+    bool result;
+    if(abs(a.x) <= 0.0000001)
+        result = true;
+    else if (abs(a.y) <= 0.0000001)
+        result = true;
+    else if (abs(a.z) <= 0.0000001)
+        result = true;
+    else
+        result = false;
+    
+    return result;
+}
+
+static bool IsSameDirection(const TVector a, const TVector b)
+{
+    double scalar = 0;
+    if (!CheckZeroDim(a) && !CheckZeroDim(b))
+        scalar = a.x / b.x;
+    else if (abs(b.x)>=0.0000001)
+        scalar = a.x / b.x;
+    else if (abs(b.y)>=0.0000001)
+        scalar = a.y / b.y;
+    else if (abs(b.z)>=0.0000001)
+        scalar = a.z / b.z;
+    
+    if(scalar > 0.0000001)
+        return true;
+    else
+        return false;
 
 
-    if (abs(scalar_x - scalar_y) >= 0.0000001)
+    /*
+    double scalar_x = 0;
+    bool zero_by_zero_x = false;
+    bool zero_by_zero_y = false;
+    bool zero_by_zero_z = false;
+    
+    if(abs(a.x) > 0.0000001 && abs(b.x) <= 0.0000001)
         return false;
-    else if (abs(scalar_x - scalar_z) >= 0.0000001)
+    else if(abs(a.x) <= 0.0000001 && abs(b.x) <=0.0000001)
+        zero_by_zero_x = true;
+    else
+        scalar_x = a.x / b.x;
+    
+    double scalar_y = 0;
+    if (abs(a.y) > 0.0000001 && abs(b.y) <= 0.0000001)
         return false;
-    else if (abs(scalar_y - scalar_z) >= 0.0000001)
+    else if (abs(a.y) <= 0.0000001 && abs(b.y) <=0.0000001)
+        zero_by_zero_y = true;
+    else
+        scalar_y = a.y / b.y;
+    
+    double scalar_z = 0;
+    if (abs(a.z) > 0.0000001 && abs(b.z) <= 0.0000001)
+        return false;
+    else if (abs(a.z) <= 0.0000001 && abs(b.z) <=0.0000001)
+        zero_by_zero_z = true;
+    else
+        scalar_z = a.z / b.z;
+    
+    
+    if (abs(scalar_x - scalar_y) >= 0.0000001 &&
+        zero_by_zero_x == false &&
+        zero_by_zero_y == false)
+        return false;
+    else if (abs(scalar_x - scalar_z) >= 0.0000001 &&
+             zero_by_zero_x == false &&
+             zero_by_zero_z == false)
+        return false;
+    else if (abs(scalar_y - scalar_z) >= 0.0000001 &&
+             zero_by_zero_y == false &&
+             zero_by_zero_z == false)
         return false;
     else
         return true;
+     */
 }
 
 static bool IsOnPlane(const TCoordinate intersection,
@@ -39,7 +102,7 @@ static bool IsOnPlane(const TCoordinate intersection,
                       const TCoordinate corner_left_down,
                       const TCoordinate corner_right_down)
 {
-
+    
     TVector horizontal_high =
     (intersection - corner_left_up).Cross(corner_right_up - corner_left_up);
     TVector horizontal_low =
@@ -48,18 +111,18 @@ static bool IsOnPlane(const TCoordinate intersection,
     (intersection - corner_right_up).Cross(corner_right_down - corner_right_up);
     TVector vertical_low =
     (intersection - corner_left_down).Cross(corner_left_up - corner_left_down);
-
-    if (!IsParallel(horizontal_high, horizontal_low))
+    
+    if (!IsSameDirection(horizontal_high, horizontal_low))
         return false;
-    else if (!IsParallel(horizontal_high, vertical_high))
+    else if (!IsSameDirection(horizontal_high, vertical_high))
         return false;
-    else if (!IsParallel(horizontal_high, vertical_low))
+    else if (!IsSameDirection(horizontal_high, vertical_low))
         return false;
-    else if (!IsParallel(horizontal_low, vertical_high))
+    else if (!IsSameDirection(horizontal_low, vertical_high))
         return false;
-    else if (!IsParallel(horizontal_low, vertical_low))
+    else if (!IsSameDirection(horizontal_low, vertical_low))
         return false;
-    else if (!IsParallel(vertical_high, vertical_low))
+    else if (!IsSameDirection(vertical_high, vertical_low))
         return false;
     else
         return true;
@@ -71,16 +134,16 @@ double PlaneCuboid::ComputeDistance(TCoordinate position_in,
 {
     double scalar = 0;
     double distance = -1;
-
-    if (norm.x != 0)
+    
+    if (norm.x != 0 && abs(velocity_in.x) >= 0.0000001)
         scalar = abs((corner_left_up.x - position_in.x) / velocity_in.x);
-    else if (norm.y != 0)
+    else if (norm.y != 0 && abs(velocity_in.y) >= 0.0000001)
         scalar = abs((corner_left_up.y - position_in.y) / velocity_in.y);
-    else
+    else if (abs(velocity_in.z) >= 0.0000001)
         scalar = abs((corner_left_up.z - position_in.z) / velocity_in.z);
-
+    
     intersection = position_in + velocity_in * scalar;
-
+    
     bool is_on_plane = IsOnPlane(intersection,
                                corner_left_up,
                                corner_right_up,
@@ -90,7 +153,7 @@ double PlaneCuboid::ComputeDistance(TCoordinate position_in,
         distance = sqrt(  pow(position_in.x - intersection.x, 2)
                               + pow(position_in.y - intersection.y, 2)
                               + pow(position_in.z - intersection.z, 2) );
-
+    
     return distance;
 };
 
@@ -116,65 +179,70 @@ void Cuboid::SetValue(double x_low,
     this->z_high = z_high;
 
     this->speed = speed;
-
-
+    
+    
 }
 
 static TCoordinate FindIntersection(const double *distance_plane,
-                                      const TCoordinate *position_intersect,
+                                    const TCoordinate *position_intersect,
+                                    const TCoordinate position_in,
                                     int &index)
 {
     TCoordinate position_out;
-    int index_largest = distance(distance_plane,
-                                 max_element(distance_plane, distance_plane + 5));
-
-    for (int i=0; i<6; i++) {
-        cout<< distance_plane[i] << endl;
+    int index_largest_distance = distance(distance_plane, max_element(distance_plane, distance_plane + 6));
+    
+    if(distance_plane[index_largest_distance] == -1)
+    {
+        position_out = position_in;
+        index = 6;
     }
-    cout<< index_largest <<endl;
-    switch (index_largest) {
-        case 0:
-            position_out = position_intersect[0];
-            index = 0;
-            break;
-        case 1:
-            position_out = position_intersect[1];
-            index = 1;
-            break;
-        case 2:
-            position_out = position_intersect[2];
-            index = 2;
-            break;
-        case 3:
-            position_out = position_intersect[3];
-            index = 3;
-            break;
-        case 4:
-            position_out = position_intersect[4];
-            index = 4;
-            break;
-        case 5:
-            position_out = position_intersect[5];
-            index = 5;
-            break;
-        default:
-            break;
+    else
+    {
+        switch (index_largest_distance) {
+            case 0:
+                position_out = position_intersect[0];
+                index = 0;
+                break;
+            case 1:
+                position_out = position_intersect[1];
+                index = 1;
+                break;
+            case 2:
+                position_out = position_intersect[2];
+                index = 2;
+                break;
+            case 3:
+                position_out = position_intersect[3];
+                index = 3;
+                break;
+            case 4:
+                position_out = position_intersect[4];
+                index = 4;
+                break;
+            case 5:
+                position_out = position_intersect[5];
+                index = 5;
+                break;
+            default:
+                break;
+        }
     }
-
+    
     return position_out;
 }
 
 static TVector GetNormPlaneVector(const PlaneCuboid &plane,
-                              const TVector velocity_in){
+                                  const TVector velocity_in)
+{
     TVector norm_plane = plane.GetNorm();
     double cross = norm_plane.Dot(velocity_in);
     double angle = acos(cross / (norm_plane.Abs() * velocity_in.Abs()));
-
-    if (angle < M_PI)
+    
+    if (angle < M_PI/2)
         norm_plane = -norm_plane;
-
+    
     return norm_plane;
-
+    
 }
 
 static TCoordinate ComputeIntersection(const vector<PlaneCuboid> &plane,
@@ -203,21 +271,27 @@ static TCoordinate ComputeIntersection(const vector<PlaneCuboid> &plane,
     distance_plane[5] = plane[5].ComputeDistance(position_in,
                                                  velocity_in,
                                                  position_intersect[5]);
-
+    
+    for (int i=0; i<6; i++) {
+        cout << distance_plane[i] << endl;
+    }
+    
     TCoordinate position_out = FindIntersection(distance_plane,
                                                 position_intersect,
+                                                position_in,
                                                 index_norm_plane);
-
-    norm_plane = GetNormPlaneVector(plane[index_norm_plane], velocity_in);
-
+    
+    if(index_norm_plane != 6)
+        norm_plane = GetNormPlaneVector(plane[index_norm_plane], velocity_in);
+    
     return position_out;
 }
 
 pair<TCoordinate, TVector> Cuboid::ComputePath(TCoordinate position_in,
-                                               TVector velocity_in) const
+                                               TVector velocity_in)
 {
-
-
+    
+    
     // Compute intersection position
     TCoordinate x_high_y_high_z_high(x_high, y_high, z_high);
     TCoordinate x_high_y_high_z_low(x_high, y_high, z_low);
@@ -227,7 +301,7 @@ pair<TCoordinate, TVector> Cuboid::ComputePath(TCoordinate position_in,
     TCoordinate x_low_y_high_z_low(x_low, y_high, z_low);
     TCoordinate x_low_y_low_z_high(x_low, y_low, z_high);
     TCoordinate x_low_y_low_z_low(x_low, y_low, z_low);
-
+    
     PlaneCuboid x_low(x_low_y_low_z_high,
                       x_low_y_high_z_high,
                       x_low_y_low_z_low,
