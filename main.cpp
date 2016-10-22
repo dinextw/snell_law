@@ -2,6 +2,8 @@
 #include <iostream>
 #include <sstream>
 #include "path_tracker.h"
+#include "cuboid.hpp"
+#include "snell_adjust.hpp"
 
 using namespace std;
 
@@ -124,6 +126,25 @@ int main(int argc, char *argv[])
                   TCoordinate(0, 50, 15),
                   TVector(30, -40, -15),
                   TCoordinate(30, 10, 0));
+    
+    // Cuboid test
+    Cuboid Test;
+    TCoordinate position_in(0,0,0);
+    TVector velocity_in(1,1,-1);
+    pair<TCoordinate, TVector> output;
+    Test.SetValue(0, 10, 0, 10, 0, 10, 3);
+    output = Test.ComputePath(position_in, velocity_in);
+    cout << output.first.x << "," << output.first.y << "," << output.first.z << endl;;
+
+    
+    // Snell adjust test
+    SnellAngleAdjust test;
+    TVector velocity_in(5,5,10/sqrt(2)), norm_plane(0,0,-1), velocity_out;
+    double speed_in = 3*sqrt(2), speed_out = 3;
+    TVector test_vector;
+    
+    velocity_out = test.ComputeRefractedVelocity(velocity_in, norm_plane, speed_in, speed_out);
+    cout << velocity_out.x << "," << velocity_out.y << "," << velocity_out.z <<endl;
 
     return 0;
 }
