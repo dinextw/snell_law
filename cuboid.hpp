@@ -9,15 +9,39 @@
 #ifndef snell_hpp
 #define snell_hpp
 
-#include <iostream>
-#include <algorithm>
-#include <utility>
-#include <vector>
-#include <numeric>
-#include <cmath>
+
 #include "coordinate.hpp"
 
-using namespace std;
+
+
+class PlaneCuboid{
+private:
+    TVector norm;
+    
+    TCoordinate corner_left_up, corner_right_up;
+    TCoordinate corner_left_down, corner_right_down;
+    
+public:
+    PlaneCuboid(){};
+    PlaneCuboid(TCoordinate corner_left_up,
+                TCoordinate corner_right_up,
+                TCoordinate corner_left_down,
+                TCoordinate corner_right_down)
+    : corner_left_up(corner_left_up),
+      corner_left_down(corner_left_down),
+      corner_right_up(corner_right_up),
+      corner_right_down(corner_right_down){
+          TVector horizontal = corner_right_up - corner_left_up;
+          TVector vertical = corner_right_down - corner_right_up;
+          norm = horizontal.Cross(vertical);
+    }
+    
+public:
+    double ComputeDistance(TCoordinate position_in,
+                           TVector velocity_in,
+                           TCoordinate &intersection) const;
+    TVector GetNorm() const;
+};
 
 class Cuboid
 {
@@ -48,24 +72,10 @@ public:
                   double z_high,
                   double speed);
 
-    pair<TCoordinate, TVector> ComputePath(TCoordinate position_in, TVector velocity_in);
+    std::pair<TCoordinate, TVector> ComputePath(TCoordinate position_in,
+                                                TVector velocity_in);
 
 
 };
-
-template <typename T>
-vector<size_t> SortIndexes(const vector<T> &v)
-{
-
-    // initialize original index locations
-    vector<size_t> idx(v.size());
-    iota(idx.begin(), idx.end(), 0);
-
-    // sort indexes based on comparing values in v
-    sort(idx.begin(), idx.end(),
-         [&v](size_t i1, size_t i2) {return v[i1] < v[i2];});
-
-    return idx;
-}
 
 #endif /* snell_hpp */
