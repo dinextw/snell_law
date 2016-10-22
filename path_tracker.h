@@ -11,7 +11,7 @@ class TTravelPoint
 {
 public:
     TCoordinate point;
-    double      speel_to_next;
+    double      speed_to_next;
 };
 
 std::list<TTravelPoint> TrackPath(const TMesh       &mesh,

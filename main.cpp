@@ -1,3 +1,4 @@
+#include <assert.h>
 #include <iostream>
 #include <sstream>
 #include "path_tracker.h"
@@ -50,6 +51,35 @@ int main(int argc, char *argv[])
         TVector plane = result.second;
         cout << "  Destination : " << ToString(destination) << endl;
         cout << "  Plane normal : " << ToString(plane) << endl;
+    }
+
+    // Travel path track test.
+    {
+        TCoordinate start(0, 0, 15);
+        TCoordinate target_end(30, 10, 0);
+        TVector     direction( target_end - start );
+
+        auto path = TrackPath(mesh, start, direction);
+        assert( path.size() );
+
+        TCoordinate end = path.rbegin()->point;
+        cout << "End point: "
+             << ToString(end)
+             << ", error= "
+             << ( end - target_end ).Abs()
+             << endl;
+
+        cout << "Travel points:" << endl;
+        for(auto iter = path.begin(); iter != path.end(); ++iter)
+        {
+            cout << "  point: "
+                 << ToString(iter->point)
+                 << ", speed: "
+                 << iter->speed_to_next
+                 << endl;
+        }
+
+        cout << endl;
     }
 
     return 0;

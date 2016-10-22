@@ -6,4 +6,6 @@ list<TTravelPoint> TrackPath(const TMesh       &mesh,
                              const TCoordinate &start,
                              const TVector     &direction)
 {
+    list<TTravelPoint> path;
+    return path;
 }
