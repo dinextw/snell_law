@@ -12,8 +12,7 @@ string ToString(const TVector &v)
     return stream.str();
 }
 
-#warning Remember to change cell to constant type.
-void CuboidPathTest(Cuboid             cell,
+void CuboidPathTest(const Cuboid      &cell,
                     const TCoordinate &start,
                     const TVector     &direction,
                     const TCoordinate &target_end,

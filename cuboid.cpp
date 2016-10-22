@@ -21,8 +21,8 @@ static bool IsParallel(const TVector a, const TVector b)
     double scalar_x = a.x / b.x;
     double scalar_y = a.y / b.y;
     double scalar_z = a.z / b.z;
-    
-    
+
+
     if (abs(scalar_x - scalar_y) >= 0.0000001)
         return false;
     else if (abs(scalar_x - scalar_z) >= 0.0000001)
@@ -39,7 +39,7 @@ static bool IsOnPlane(const TCoordinate intersection,
                       const TCoordinate corner_left_down,
                       const TCoordinate corner_right_down)
 {
-    
+
     TVector horizontal_high =
     (intersection - corner_left_up).Cross(corner_right_up - corner_left_up);
     TVector horizontal_low =
@@ -48,7 +48,7 @@ static bool IsOnPlane(const TCoordinate intersection,
     (intersection - corner_right_up).Cross(corner_right_down - corner_right_up);
     TVector vertical_low =
     (intersection - corner_left_down).Cross(corner_left_up - corner_left_down);
-    
+
     if (!IsParallel(horizontal_high, horizontal_low))
         return false;
     else if (!IsParallel(horizontal_high, vertical_high))
@@ -71,16 +71,16 @@ double PlaneCuboid::ComputeDistance(TCoordinate position_in,
 {
     double scalar = 0;
     double distance = -1;
-    
+
     if (norm.x != 0)
         scalar = abs((corner_left_up.x - position_in.x) / velocity_in.x);
     else if (norm.y != 0)
         scalar = abs((corner_left_up.y - position_in.y) / velocity_in.y);
     else
         scalar = abs((corner_left_up.z - position_in.z) / velocity_in.z);
-    
+
     intersection = position_in + velocity_in * scalar;
-    
+
     bool is_on_plane = IsOnPlane(intersection,
                                corner_left_up,
                                corner_right_up,
@@ -90,7 +90,7 @@ double PlaneCuboid::ComputeDistance(TCoordinate position_in,
         distance = sqrt(  pow(position_in.x - intersection.x, 2)
                               + pow(position_in.y - intersection.y, 2)
                               + pow(position_in.z - intersection.z, 2) );
-    
+
     return distance;
 };
 
@@ -116,8 +116,8 @@ void Cuboid::SetValue(double x_low,
     this->z_high = z_high;
 
     this->speed = speed;
-    
-    
+
+
 }
 
 static TCoordinate FindIntersection(const double *distance_plane,
@@ -127,7 +127,7 @@ static TCoordinate FindIntersection(const double *distance_plane,
     TCoordinate position_out;
     int index_largest = distance(distance_plane,
                                  max_element(distance_plane, distance_plane + 5));
-    
+
     for (int i=0; i<6; i++) {
         cout<< distance_plane[i] << endl;
     }
@@ -160,7 +160,7 @@ static TCoordinate FindIntersection(const double *distance_plane,
         default:
             break;
     }
-    
+
     return position_out;
 }
 
@@ -169,12 +169,12 @@ static TVector GetNormPlaneVector(const PlaneCuboid &plane,
     TVector norm_plane = plane.GetNorm();
     double cross = norm_plane.Dot(velocity_in);
     double angle = acos(cross / (norm_plane.Abs() * velocity_in.Abs()));
-    
+
     if (angle < M_PI)
         norm_plane = -norm_plane;
-    
+
     return norm_plane;
-    
+
 }
 
 static TCoordinate ComputeIntersection(const vector<PlaneCuboid> &plane,
@@ -203,21 +203,21 @@ static TCoordinate ComputeIntersection(const vector<PlaneCuboid> &plane,
     distance_plane[5] = plane[5].ComputeDistance(position_in,
                                                  velocity_in,
                                                  position_intersect[5]);
-    
+
     TCoordinate position_out = FindIntersection(distance_plane,
                                                 position_intersect,
                                                 index_norm_plane);
-    
+
     norm_plane = GetNormPlaneVector(plane[index_norm_plane], velocity_in);
-    
+
     return position_out;
 }
 
 pair<TCoordinate, TVector> Cuboid::ComputePath(TCoordinate position_in,
-                                               TVector velocity_in)
+                                               TVector velocity_in) const
 {
-    
-    
+
+
     // Compute intersection position
     TCoordinate x_high_y_high_z_high(x_high, y_high, z_high);
     TCoordinate x_high_y_high_z_low(x_high, y_high, z_low);
@@ -227,7 +227,7 @@ pair<TCoordinate, TVector> Cuboid::ComputePath(TCoordinate position_in,
     TCoordinate x_low_y_high_z_low(x_low, y_high, z_low);
     TCoordinate x_low_y_low_z_high(x_low, y_low, z_high);
     TCoordinate x_low_y_low_z_low(x_low, y_low, z_low);
-    
+
     PlaneCuboid x_low(x_low_y_low_z_high,
                       x_low_y_high_z_high,
                       x_low_y_low_z_low,

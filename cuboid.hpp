@@ -85,7 +85,7 @@ public:
     double      GetSpeed() const { return speed; }
 
     std::pair<TCoordinate, TVector> ComputePath(TCoordinate position_in,
-                                                TVector velocity_in);
+                                                TVector velocity_in) const;
 
 };
 
