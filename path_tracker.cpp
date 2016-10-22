@@ -1,3 +1,4 @@
+#include <stdexcept>
 #include "path_tracker.h"
 
 using namespace std;
