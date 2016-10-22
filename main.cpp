@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
 
     // Travel path track test.
     {
-        TCoordinate start(0, 0, 15);
+        TCoordinate start(0, 50, 15);
         TCoordinate target_end(30, 10, 0);
         TVector     direction( target_end - start );
 
