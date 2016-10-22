@@ -140,7 +140,7 @@ Cuboid TMesh::GetCellByIndex(unsigned x, unsigned y, unsigned z) const
                   boundaries_y.at(y),
                   boundaries_y.at(y+1),
                   boundaries_z.at(z),
-                  boundaries_z.at(z+z),
+                  boundaries_z.at(z+1),
                   speed_list.at(GetSpeedIndexByPositionIndex(x, y, z)));
 
     return cell;
