@@ -12,6 +12,18 @@ class TTravelPoint
 public:
     TCoordinate point;
     double      speed_to_next;
+
+public:
+    TTravelPoint()
+        : speed_to_next(0)
+    {
+    }
+
+    TTravelPoint(const TCoordinate &point, double speed)
+        : point(point), speed_to_next(speed)
+    {
+    }
+
 };
 
 std::list<TTravelPoint> TrackPath(const TMesh       &mesh,
