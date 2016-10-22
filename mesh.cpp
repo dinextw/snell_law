@@ -134,16 +134,9 @@ Cuboid TMesh::GetCellByIndex(unsigned x, unsigned y, unsigned z) const
     if( x >= CountCellsX() ||  y >= CountCellsY() || z >= CountCellsZ() )
         throw out_of_range(__func__);
 
-    Cuboid cell;
-    cell.SetValue(boundaries_x.at(x),
-                  boundaries_x.at(x+1),
-                  boundaries_y.at(y),
-                  boundaries_y.at(y+1),
-                  boundaries_z.at(z),
-                  boundaries_z.at(z+1),
+    return Cuboid(TCoordinate(boundaries_x.at(x), boundaries_y.at(y), boundaries_z.at(z)),
+                  TCoordinate(boundaries_x.at(x+1), boundaries_y.at(y+1), boundaries_z.at(z+1)),
                   speed_list.at(GetSpeedIndexByPositionIndex(x, y, z)));
-
-    return cell;
 }
 
 static

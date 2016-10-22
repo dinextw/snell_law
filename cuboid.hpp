@@ -22,24 +22,34 @@ using namespace std;
 class Cuboid
 {
 private:
-    double x_low, x_high;
-    double y_low, y_high;
-    double z_low, z_high;
-
+    double x_low, y_low, z_low;
+    double x_high, y_high, z_high;
     double speed;
 
 public:
     Cuboid()
         : x_low(0),
-          x_high(0),
           y_low(0),
-          y_high(0),
           z_low(0),
+          x_high(0),
+          y_high(0),
           z_high(0),
           speed(0)
     {
     }
 
+    Cuboid(const TCoordinate &low_bound, const TCoordinate &high_bound, bool speed)
+        : x_low(low_bound.x),
+          y_low(low_bound.y),
+          z_low(low_bound.z),
+          x_high(high_bound.x),
+          y_high(high_bound.y),
+          z_high(high_bound.z),
+          speed(speed)
+    {
+    }
+
+public:
     void SetValue(double x_low,
                   double x_high,
                   double y_low,

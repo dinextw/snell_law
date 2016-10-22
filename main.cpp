@@ -77,14 +77,12 @@ void TestPathTrack(const TMesh       &mesh,
 int main(int argc, char *argv[])
 {
     // Cuboid path test.
-    Cuboid cell;
-    cell.SetValue(10, 20, 20, 40, 5, 10, 1);
-    CuboidPathTest(cell,
+    CuboidPathTest(Cuboid(TCoordinate(10, 20, 5), TCoordinate(20, 40, 10), 1),
                    TCoordinate(10, 22, 6),
                    TVector(10, 16, 3),
                    TCoordinate(20, 38, 9),
                    TVector(1, 0, 0));
-    CuboidPathTest(cell,
+    CuboidPathTest(Cuboid(TCoordinate(10, 20, 5), TCoordinate(20, 40, 10), 1),
                    TCoordinate(20, 38, 9),
                    TVector(-10, -16, -3),
                    TCoordinate(10, 22, 6),
