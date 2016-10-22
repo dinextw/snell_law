@@ -19,6 +19,7 @@ int main(int argc, char *argv[])
     cout << "Mesh dimension : (" << mesh.CountCellsX() << ","
                                  << mesh.CountCellsY() << ","
                                  << mesh.CountCellsZ() << ")" << endl;
+    cout << endl;
 
     // Cuboid path test.
     Cuboid cell = mesh.GetCellByPoint(TVector(15, 30, 8));
@@ -36,6 +37,8 @@ int main(int argc, char *argv[])
         TVector plane = result.second;
         cout << "  Destination : " << ToString(destination) << endl;
         cout << "  Plane normal : " << ToString(plane) << endl;
+
+        cout << endl;
     }
     {
         cout << "Cuboid path calculate:" << endl;
@@ -51,6 +54,8 @@ int main(int argc, char *argv[])
         TVector plane = result.second;
         cout << "  Destination : " << ToString(destination) << endl;
         cout << "  Plane normal : " << ToString(plane) << endl;
+
+        cout << endl;
     }
 
     // Travel path track test.
