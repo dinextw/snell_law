@@ -29,6 +29,8 @@ bool FindNextCell(const TMesh       &mesh,
     return false;
 }
 
+#include <iostream>
+
 list<TTravelPoint> TrackPath(const TMesh       &mesh,
                              const TCoordinate &start,
                              const TVector     &direction)
@@ -39,7 +41,7 @@ list<TTravelPoint> TrackPath(const TMesh       &mesh,
     TCoordinate curr_point  = start;
     TVector     curr_way    = direction;
     TVector     curr_normal = direction;  // Normal have no effect if it is equal as incoming vector.
-    double      curr_speed  = 0;
+    double      curr_speed  = 1;          // A dummy value, it can be any positive but zero.
     while(true)
     {
         // Get the next cell.
