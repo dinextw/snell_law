@@ -11,36 +11,6 @@
 
 #include "coordinate.hpp"
 
-class PlaneCuboid
-{
-private:
-    TVector norm;
-
-    TCoordinate corner_left_up, corner_right_up;
-    TCoordinate corner_left_down, corner_right_down;
-
-public:
-    PlaneCuboid(){};
-    PlaneCuboid(TCoordinate corner_left_up,
-                TCoordinate corner_right_up,
-                TCoordinate corner_left_down,
-                TCoordinate corner_right_down)
-    : corner_left_up(corner_left_up),
-      corner_right_up(corner_right_up),
-      corner_left_down(corner_left_down),
-      corner_right_down(corner_right_down){
-          TVector horizontal = corner_right_up - corner_left_up;
-          TVector vertical = corner_right_down - corner_right_up;
-          norm = horizontal.Cross(vertical);
-    }
-
-public:
-    double ComputeDistance(TCoordinate position_in,
-                           TVector velocity_in,
-                           TCoordinate &intersection) const;
-    TVector GetNorm() const;
-};
-
 class Cuboid
 {
 private:
