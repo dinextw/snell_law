@@ -7,13 +7,6 @@
 
 using namespace std;
 
-string ToString(const TVector &v)
-{
-    stringstream stream;
-    stream << "(" << v.x << "," << v.y << "," << v.z << ")";
-    return stream.str();
-}
-
 void CuboidPathTest(const Cuboid      &cell,
                     const TCoordinate &start,
                     const TVector     &direction,
@@ -22,20 +15,20 @@ void CuboidPathTest(const Cuboid      &cell,
 {
     cout << "Cuboid path calculate:" << endl;
 
-    cout << "  Start point: " << ToString(start) << endl;
-    cout << "  Direction: " << ToString(direction) << endl;
+    cout << "  Start point: " << start.ToString() << endl;
+    cout << "  Direction: " << direction.ToString() << endl;
 
     auto result = cell.ComputePath(start, direction);
 
     TCoordinate end    = result.first;
     TVector     normal = result.second;
     cout << "  End point: "
-         << ToString(end)
+         << end.ToString()
          << ", error: "
          << ( end - target_end ).Abs()
          << endl;
     cout << "  Normal vector: "
-         << ToString(normal)
+         << normal.ToString()
          << ", error: "
          << ( normal - target_normal ).Abs()
          << endl;
@@ -60,8 +53,8 @@ void PrintMeshData(const TMesh &mesh)
             {
                 Cuboid cell = mesh.GetCellByIndex(x, y, z);
                 cout << "    Point " << x << ", " << y << ", " << z << endl;
-                cout << "      Low bound: " << ToString(cell.GetLowBound()) << endl;
-                cout << "      High bound: " << ToString(cell.GetHighBound()) << endl;
+                cout << "      Low bound: " << cell.GetLowBound().ToString() << endl;
+                cout << "      High bound: " << cell.GetHighBound().ToString() << endl;
                 cout << "      Speed: " << cell.GetSpeed() << endl;
             }
         }
@@ -76,15 +69,15 @@ void TestPathTrack(const TMesh       &mesh,
                    const TCoordinate &target_end)
 {
     cout << "Track path test:" << endl;
-    cout << "  Start point: " << ToString(start) << endl;
-    cout << "  Direction: " << ToString(direction) << endl;
+    cout << "  Start point: " << start.ToString() << endl;
+    cout << "  Direction: " << direction.ToString() << endl;
 
     auto path = TrackPath(mesh, start, direction);
     assert( path.size() );
 
     TCoordinate end = path.rbegin()->point;
     cout << "  End point: "
-         << ToString(end)
+         << end.ToString()
          << ", error= "
          << ( end - target_end ).Abs()
          << endl;
@@ -93,7 +86,7 @@ void TestPathTrack(const TMesh       &mesh,
     for(auto iter = path.begin(); iter != path.end(); ++iter)
     {
         cout << "    point: "
-             << ToString(iter->point)
+             << iter->point.ToString()
              << ", speed: "
              << iter->speed_to_next
              << endl;

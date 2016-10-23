@@ -5,6 +5,7 @@
 #define _COORDINATE_HPP_
 
 #include <math.h>
+#include <string>
 
 /**
  * Vector.
@@ -85,6 +86,10 @@ public:
                        z * v.x - x * v.z,
                        x * v.y - y * v.x);
     }
+
+public:
+    void FromString(const std::string &str);
+    std::string ToString() const;
 
 };
 
