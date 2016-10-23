@@ -127,7 +127,7 @@ int main(int argc, char *argv[])
     CuboidPathTest(Cuboid(TCoordinate(0, 20, 10), TCoordinate(10, 10, 15), 1),
                    TCoordinate(7.5, 40, 11.25),
                    TVector(30, -40, -15),
-                   TCoordinate(0, 0, 0),
+                   TCoordinate(10, 36.667, 10),
                    TVector(1, 0, 0));
 
     // Load test mesh.
