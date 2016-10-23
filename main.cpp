@@ -104,6 +104,17 @@ void TestPathTrack(const TMesh       &mesh,
 
 int main(int argc, char *argv[])
 {
+    // Snell adjust test
+    {
+        SnellAngleAdjust test;
+        TVector velocity_in(5,5,10/sqrt(2)), norm_plane(0,0,-1), velocity_out;
+        double speed_in = 3*sqrt(2), speed_out = 3;
+        TVector test_vector;
+
+        velocity_out = test.ComputeRefractedVelocity(velocity_in, norm_plane, speed_in, speed_out);
+        cout << velocity_out.x << "," << velocity_out.y << "," << velocity_out.z <<endl;
+    }
+
     // Cuboid path test.
     CuboidPathTest(Cuboid(TCoordinate(10, 20, 5), TCoordinate(20, 40, 10), 1),
                    TCoordinate(10, 22, 6),
@@ -115,6 +126,11 @@ int main(int argc, char *argv[])
                    TVector(-10, -16, -3),
                    TCoordinate(10, 22, 6),
                    TVector(-1, 0, 0));
+    CuboidPathTest(Cuboid(TCoordinate(0, 0, 0), TCoordinate(10, 10, 10), 3),
+                   TCoordinate(0, 0, 0),
+                   TVector(0.8, 0.6, 0.5),
+                   TCoordinate(10, 7.5, 6.25),
+                   TVector(1, 0, 0));
 
     // Load test mesh.
     TMesh mesh;
@@ -126,25 +142,7 @@ int main(int argc, char *argv[])
                   TCoordinate(0, 50, 15),
                   TVector(30, -40, -15),
                   TCoordinate(30, 10, 0));
-    /*
-    // Cuboid test
-    Cuboid test_cuboid;
-    TCoordinate position_in(0,0,0);
-    TVector velocity_in(0.8,0.6,0.5);
-    pair<TCoordinate, TVector> result;
-    test_cuboid.SetValue(0, 10, 0, 10, 0, 10, 3);
-    result = test_cuboid.ComputePath(position_in, velocity_in);
-    cout << result.first.x << "," << result.first.y << "," << result.first.z << endl;
-    cout << result.second.x << "," << result.second.y << "," << result.second.z << endl;
-    
-    // Snell adjust test
-    SnellAngleAdjust test;
-    TVector velocity_in(5,5,10/sqrt(2)), norm_plane(0,0,-1), velocity_out;
-    double speed_in = 3*sqrt(2), speed_out = 3;
-    TVector test_vector;
-    
-    velocity_out = test.ComputeRefractedVelocity(velocity_in, norm_plane, speed_in, speed_out);
-    cout << velocity_out.x << "," << velocity_out.y << "," << velocity_out.z <<endl;
-    */
+
+
     return 0;
 }
