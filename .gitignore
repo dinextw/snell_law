@@ -1,5 +1,6 @@
 /debug/
 /release/
+/snell_law_test
 /snell_law
 *.layout
 *.depend
