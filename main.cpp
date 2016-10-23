@@ -126,14 +126,14 @@ int main(int argc, char *argv[])
                   TCoordinate(0, 50, 15),
                   TVector(30, -40, -15),
                   TCoordinate(30, 10, 0));
-    
+    /*
     // Cuboid test
-    Cuboid test;
+    Cuboid test_cuboid;
     TCoordinate position_in(0,0,0);
     TVector velocity_in(0.8,0.6,0.5);
     pair<TCoordinate, TVector> result;
-    test.SetValue(0, 10, 0, 10, 0, 10, 3);
-    result = test.ComputePath(position_in, velocity_in);
+    test_cuboid.SetValue(0, 10, 0, 10, 0, 10, 3);
+    result = test_cuboid.ComputePath(position_in, velocity_in);
     cout << result.first.x << "," << result.first.y << "," << result.first.z << endl;
     cout << result.second.x << "," << result.second.y << "," << result.second.z << endl;
     
@@ -145,6 +145,6 @@ int main(int argc, char *argv[])
     
     velocity_out = test.ComputeRefractedVelocity(velocity_in, norm_plane, speed_in, speed_out);
     cout << velocity_out.x << "," << velocity_out.y << "," << velocity_out.z <<endl;
-
+    */
     return 0;
 }

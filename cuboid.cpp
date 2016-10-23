@@ -189,7 +189,7 @@ static TCoordinate FindIntersection(const double *distance_plane,
                                     int &index)
 {
     TCoordinate position_out;
-    int index_largest_distance = distance(distance_plane, max_element(distance_plane, distance_plane + 6));
+    long index_largest_distance = distance(distance_plane, max_element(distance_plane, distance_plane + 6));
     
     if(distance_plane[index_largest_distance] == -1)
     {
@@ -238,10 +238,10 @@ static TVector GetNormPlaneVector(const PlaneCuboid &plane,
     double cross = norm_plane.Dot(velocity_in);
     double angle = acos(cross / (norm_plane.Abs() * velocity_in.Abs()));
     
-    if (angle < M_PI/2)
+    if (angle > M_PI/2)
         norm_plane = -norm_plane;
     
-    return norm_plane;
+    return norm_plane.Unit();
     
 }
 
@@ -272,10 +272,6 @@ static TCoordinate ComputeIntersection(const vector<PlaneCuboid> &plane,
                                                  velocity_in,
                                                  position_intersect[5]);
     
-    for (int i=0; i<6; i++) {
-        cout << distance_plane[i] << endl;
-    }
-    
     TCoordinate position_out = FindIntersection(distance_plane,
                                                 position_intersect,
                                                 position_in,
@@ -288,7 +284,7 @@ static TCoordinate ComputeIntersection(const vector<PlaneCuboid> &plane,
 }
 
 pair<TCoordinate, TVector> Cuboid::ComputePath(TCoordinate position_in,
-                                               TVector velocity_in)
+                                               TVector velocity_in) const
 {
     
     
