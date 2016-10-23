@@ -3,5 +3,5 @@ g++ -o snell_law \
     cuboid.cpp \
     mesh.cpp \
     path_tracker.cpp \
-    main.cpp \
+    snell_law_test.cpp \
 && ./snell_law
