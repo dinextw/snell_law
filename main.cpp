@@ -131,6 +131,11 @@ int main(int argc, char *argv[])
                    TVector(0.8, 0.6, 0.5),
                    TCoordinate(10, 7.5, 6.25),
                    TVector(1, 0, 0));
+    CuboidPathTest(Cuboid(TCoordinate(0, 20, 10), TCoordinate(10, 10, 15), 1),
+                   TCoordinate(7.5, 40, 11.25),
+                   TVector(30, -40, -15),
+                   TCoordinate(0, 0, 0),
+                   TVector(1, 0, 0));
 
     // Load test mesh.
     TMesh mesh;
@@ -142,7 +147,6 @@ int main(int argc, char *argv[])
                   TCoordinate(0, 50, 15),
                   TVector(30, -40, -15),
                   TCoordinate(30, 10, 0));
-
 
     return 0;
 }
