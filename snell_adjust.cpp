@@ -14,14 +14,20 @@ TVector SnellAngleAdjust::ComputeRefractedVelocity(TVector velocity_cell1,
                                                    double  speed_out)
 {
     // Initialization
-    velocity_in = velocity_cell1 / velocity_cell1.Abs();
+    velocity_in = velocity_cell1.Unit();
     norm_plane = norm_plane_vector;
     speed_cell1 = speed_in;
     speed_cell2 = speed_out;
-    double r = speed_cell2/speed_cell1;
-    double c = -norm_plane.Dot(velocity_in);
+    
+    // Check if normal vector of plane is correct
+    double cross = norm_plane.Dot(velocity_in);
+    double angle = acos(cross / (norm_plane.Abs() * velocity_in.Abs()));
+    if (angle < M_PI/2)
+        norm_plane = -norm_plane;
 
     // Determine if Refraction or Total Reflection
+    double r = speed_cell2 / speed_cell1;
+    double c = -norm_plane.Dot(velocity_in);
     if (1 - pow(r, 2) * (1 - pow(c, 2)) >= 0)
     {
         // Refraction
