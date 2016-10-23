@@ -1,6 +1,5 @@
 #include <assert.h>
 #include <iostream>
-#include <sstream>
 #include "path_tracker.h"
 #include "cuboid.hpp"
 #include "snell_adjust.hpp"
