@@ -21,6 +21,17 @@ void WritePathToFile(const list<TTravelPoint> &path, const string &filename)
     file.open(filename, ios::out);
     if( !file.is_open() ) throw runtime_error("Cannot open output file!");
 
+    file << "point"
+         << "\t"
+         << "speed"
+         << "\t"
+         << "distance"
+         << "\t"
+         << "travel time"
+         << "\t"
+         << "total time"
+         << endl;
+
     TCoordinate prev_point;
     double      prev_speed = 1;
     double      total_time = 0;
