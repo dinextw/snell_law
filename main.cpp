@@ -21,8 +21,31 @@ void WritePathToFile(const list<TTravelPoint> &path, const string &filename)
     file.open(filename, ios::out);
     if( !file.is_open() ) throw runtime_error("Cannot open output file!");
 
+    TCoordinate prev_point;
+    double      prev_speed = 1;
+    double      total_time = 0;
     for(auto iter = path.begin(); iter != path.end(); ++iter)
-        file << iter->point.ToString() << "\t" << iter->speed_to_next << endl;
+    {
+        TCoordinate curr_point  = iter->point;
+        double      curr_speed  = iter->speed_to_next;
+        double      distance    = ( curr_point - prev_point ).Abs();
+        double      travel_time = distance / prev_speed;
+        total_time += travel_time;
+
+        file << curr_point.ToString()
+             << "\t"
+             << prev_speed
+             << "\t"
+             << distance
+             << "\t"
+             << travel_time
+             << "\t"
+             << total_time
+             << endl;
+
+        prev_point = curr_point;
+        prev_speed = curr_speed;
+    }
 }
 
 int main(int argc, char *argv[])
