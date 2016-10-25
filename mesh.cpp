@@ -20,6 +20,33 @@ void TMesh::Clear()
 }
 
 static
+void DropLineComment(string &line)
+{
+    size_t markpos = line.find('#');
+    if( markpos != string::npos ) line.resize(markpos);
+}
+
+static
+stringstream LoadFileIntoStream(const string &filename)
+{
+    fstream file;
+    file.open(filename, ios::in | ios::binary);
+    if( !file.is_open() ) throw runtime_error( "Cannot open file: " + filename );
+
+    string content;
+    while( !file.fail() )
+    {
+        string line;
+        getline(file, line);
+
+        DropLineComment(line);
+        content += line + "\n";
+    }
+
+    return stringstream(content);
+}
+
+static
 bool CheckBoundaryOrder(const vector<double> &points)
 {
     for(unsigned i=1; i<points.size(); ++i)
@@ -50,16 +77,16 @@ void ReadBoundaryPoints(stringstream &stream, vector<double> &points)
 }
 
 static
-void ReadBoundries(fstream        &file,
+void ReadBoundries(stringstream   &stream,
                    vector<double> &bound_x,
                    vector<double> &bound_y,
                    vector<double> &bound_z)
 {
-    while( !file.fail() &&
+    while( !stream.fail() &&
           ( bound_x.empty() || bound_y.empty() || bound_z.empty() ))
     {
         string linestr;
-        getline(file, linestr);
+        getline(stream, linestr);
         if( linestr.empty() ) continue;
 
         stringstream linestream(linestr, ios::in);
@@ -80,7 +107,7 @@ void ReadBoundries(fstream        &file,
 }
 
 static
-void ReadSpeeds(fstream        &file,
+void ReadSpeeds(stringstream   &stream,
                 unsigned        count_x,
                 unsigned        count_y,
                 unsigned        count_z,
@@ -95,8 +122,8 @@ void ReadSpeeds(fstream        &file,
     for(unsigned i=0; i<total_count; ++i)
     {
         double value;
-        file >> value;
-        if( file.fail() ) throw runtime_error("Speed value count error!");
+        stream >> value;
+        if( stream.fail() ) throw runtime_error("Speed value count error!");
 
         speed_list.at(i) = value;
     }
@@ -106,9 +133,7 @@ bool TMesh::LoadFile(const string &filename, bool verbose)
 {
     try
     {
-        fstream file;
-        file.open(filename, ios::in);
-        if( !file.is_open() ) throw runtime_error( "Cannot open file: " + filename );
+        stringstream file = LoadFileIntoStream(filename);
 
         ReadBoundries(file, bound_x, bound_y, bound_z);
         assert( bound_x.size() && bound_y.size() && bound_z.size() );
