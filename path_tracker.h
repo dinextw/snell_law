@@ -11,16 +11,16 @@ class TTravelPoint
 {
 public:
     TCoordinate point;
-    double      speed_to_next;
+    double      speed_from_prev;
 
 public:
     TTravelPoint()
-        : speed_to_next(0)
+        : speed_from_prev(0)
     {
     }
 
     TTravelPoint(const TCoordinate &point, double speed)
-        : point(point), speed_to_next(speed)
+        : point(point), speed_from_prev(speed)
     {
     }
 

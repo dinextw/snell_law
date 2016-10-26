@@ -87,7 +87,7 @@ void TestPathTrack(const TMesh       &mesh,
         cout << "    point: "
              << iter->point.ToString()
              << ", speed: "
-             << iter->speed_to_next
+             << iter->speed_from_prev
              << endl;
     }
 

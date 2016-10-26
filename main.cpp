@@ -33,19 +33,18 @@ void WritePathToFile(const list<TTravelPoint> &path, const string &filename)
          << endl;
 
     TCoordinate prev_point;
-    double      prev_speed = 1;
     double      total_time = 0;
     for(auto iter = path.begin(); iter != path.end(); ++iter)
     {
         TCoordinate curr_point  = iter->point;
-        double      curr_speed  = iter->speed_to_next;
+        double      speed       = iter->speed_from_prev;
         double      distance    = ( curr_point - prev_point ).Abs();
-        double      travel_time = distance / prev_speed;
+        double      travel_time = distance / speed;
         total_time += travel_time;
 
         file << curr_point.ToString()
              << "\t"
-             << prev_speed
+             << speed
              << "\t"
              << distance
              << "\t"
@@ -55,7 +54,6 @@ void WritePathToFile(const list<TTravelPoint> &path, const string &filename)
              << endl;
 
         prev_point = curr_point;
-        prev_speed = curr_speed;
     }
 }
 

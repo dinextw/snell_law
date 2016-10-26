@@ -35,13 +35,14 @@ list<TTravelPoint> TrackPath(const TMesh       &mesh,
                              const TCoordinate &start,
                              const TVector     &direction)
 {
+    static const double default_speed = 1;  // A dummy value, it can be any positive but zero.
     list<TTravelPoint> path;
-    path.push_back(TTravelPoint(start, 0));
+    path.push_back(TTravelPoint(start, default_speed));
 
     TCoordinate curr_point  = start;
     TVector     curr_way    = direction;
     TVector     curr_normal = direction;  // Normal have no effect if it is equal as incoming vector.
-    double      curr_speed  = 1;          // A dummy value, it can be any positive but zero.
+    double      curr_speed  = default_speed;
     while(true)
     {
         // Get the next cell.
@@ -61,8 +62,7 @@ list<TTravelPoint> TrackPath(const TMesh       &mesh,
         TCoordinate next_point = next.first;
 
         // Log point information.
-        path.back().speed_to_next = cell.GetSpeed();
-        path.push_back(TTravelPoint(next_point, 0));
+        path.push_back(TTravelPoint(next_point, cell.GetSpeed()));
 
         // Update information as the current for next round.
         curr_point  = next_point;
