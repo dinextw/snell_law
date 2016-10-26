@@ -32,7 +32,7 @@ void WritePathToFile(const list<TTravelPoint> &path, const string &filename)
          << "total time"
          << endl;
 
-    TCoordinate prev_point;
+    TCoordinate prev_point = path.begin()->point;
     double      total_time = 0;
     for(auto iter = path.begin(); iter != path.end(); ++iter)
     {
