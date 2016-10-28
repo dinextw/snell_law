@@ -96,11 +96,12 @@ void TestPathTrack(const TMesh       &mesh,
 
 int main(int argc, char *argv[])
 {
+    /*
     // Snell adjust test
     {
         SnellAngleAdjust test;
-        TVector velocity_in(5,5,10/sqrt(2)), norm_plane(0,0,-1), velocity_out;
-        double speed_in = 3*sqrt(2), speed_out = 3;
+        TVector velocity_in(30,-40,-15), norm_plane(30,-40,-15), velocity_out;
+        double speed_in = 1, speed_out = 25;
         TVector test_vector;
 
         velocity_out = test.ComputeRefractedVelocity(velocity_in, norm_plane, speed_in, speed_out);
@@ -128,12 +129,12 @@ int main(int argc, char *argv[])
                    TVector(30, -40, -15),
                    TCoordinate(10, 36.667, 10),
                    TVector(1, 0, 0));
-
+    */
     // Load test mesh.
     TMesh mesh;
     cout << "Load mesh file : " << mesh.LoadFile("test_speed_profile", true) << endl;
     PrintMeshData(mesh);
-
+    
     // Travel path track test.
     TestPathTrack(mesh,
                   TCoordinate(0, 50, 15),
