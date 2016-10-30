@@ -6,6 +6,33 @@
 
 using namespace std;
 
+void SnellAdjustTest(const TVector &plane_normal,
+                     double         speed_in,
+                     double         speed_out,
+                     const TVector &vector_in,
+                     const TVector &target_vector_out)
+{
+    cout << "Snell adjust test:" << endl;
+
+    SnellAngleAdjust snell;
+    TVector vector_out = snell.ComputeRefractedVelocity(vector_in,
+                                                        plane_normal,
+                                                        speed_in,
+                                                        speed_out);
+
+    cout << "  Plane normal: " << plane_normal.ToString() << endl;
+    cout << "  Speed in: " << speed_in << endl;
+    cout << "  Speed out: " << speed_out << endl;
+    cout << "  Vector in: " << vector_in.ToString() << endl;
+    cout << "  Vector out: "
+         << vector_out.ToString()
+         << ", error: "
+         << ( target_vector_out - vector_out ).Abs()
+         << endl;
+
+    cout << endl;
+}
+
 void CuboidPathTest(const Cuboid      &cell,
                     const TCoordinate &start,
                     const TVector     &direction,
@@ -98,13 +125,30 @@ int main(int argc, char *argv[])
 {
     // Snell adjust test
     {
-        SnellAngleAdjust test;
-        TVector velocity_in(5,5,10/sqrt(2)), norm_plane(0,0,-1), velocity_out;
-        double speed_in = 3*sqrt(2), speed_out = 3;
-        TVector test_vector;
+        const TVector plane_normal(0, 1, 0);
+        const double speed_in  = 3;
+        const double speed_out = 6;
 
-        velocity_out = test.ComputeRefractedVelocity(velocity_in, norm_plane, speed_in, speed_out);
-        cout << velocity_out.x << "," << velocity_out.y << "," << velocity_out.z <<endl;
+        SnellAdjustTest(plane_normal,
+                        speed_in,
+                        speed_out,
+                        TVector(0, -1, 0),
+                        TVector(0, -1, 0));
+        SnellAdjustTest(plane_normal,
+                        speed_in,
+                        speed_out,
+                        TVector(0.3, -0.953939, 0),
+                        TVector(0.6, -0.8, 0));
+        SnellAdjustTest(plane_normal,
+                        speed_in,
+                        speed_out,
+                        TVector(0.6, -0.8, 0),
+                        TVector(0.6, 0.8, 0));
+        SnellAdjustTest(plane_normal,
+                        speed_in,
+                        speed_out,
+                        TVector(1, 0, 0),
+                        TVector(1, 0, 0));
     }
 
     // Cuboid path test.
