@@ -11,46 +11,51 @@
 
 using namespace std;
 
-TVector SnellAngleAdjust::ComputeRefractedVelocity(TVector velocity_cell1,
-                                                   TVector norm_plane_vector,
-                                                   double  speed_in,
-                                                   double  speed_out)
+TVector SnellAngleAdjust::ComputeRefractedVelocity(const TVector &vector_in,
+                                                   const TVector &plane_normal,
+                                                   double         speed_in,
+                                                   double         speed_out)
 {
-    // Initialization
-    velocity_in = velocity_cell1.Unit();
-    norm_plane = norm_plane_vector;
-    speed_cell1 = speed_in;
-    speed_cell2 = speed_out;
-    
-    // Check if normal vector of plane is correct
-    double cross = norm_plane.Dot(velocity_in);
-    double product_magnitude = norm_plane.Abs() * velocity_in.Abs();
-    if (abs(abs(cross) - product_magnitude) < 0.0000001)
-        return velocity_cell1;
-    else if (cross > 0)
-        norm_plane = -norm_plane;
+    this->vector_in    = vector_in;
+    this->plane_normal = plane_normal;
+    this->speed_in     = speed_in;
+    this->speed_out    = speed_out;
 
-    
-    // Determine if Refraction or Total Reflection
-    double r = speed_cell2 / speed_cell1;
-    double c = -norm_plane.Dot(velocity_in);
-    if (1 - pow(r, 2) * (1 - pow(c, 2)) >= 0)
+    TVector normal = plane_normal.Unit();
+
+    // Reverse normal vector if needed.
+    double vector_on_normal_size = vector_in.Dot(normal);
+    if( vector_on_normal_size < 0 )
     {
-        // Refraction
-        double coeff = r * c - sqrt(1 - pow(r, 2) * (1 - pow(c, 2)));
-        velocity_out = (velocity_in * r + norm_plane * coeff) * speed_cell2;
+        vector_on_normal_size *= -1;
+        normal *= -1;
+    }
+
+    TVector vector_on_normal  = vector_on_normal_size * normal;
+    TVector vector_on_surface = vector_in - vector_on_normal;
+
+    double speed_ratio = speed_in / speed_out;
+    double numerator = speed_ratio * speed_ratio * vector_in.Abs2()
+                     - vector_on_surface.Abs2();
+    double denominator = vector_on_normal.Abs2();
+
+    static const double small_as_zero = 0.000001;
+    double factor;
+    if( denominator < small_as_zero )
+    {
+        // Surface parallel.
+        factor = 0;
+    }
+    else if( numerator < 0 )
+    {
+        // Total refraction.
+        factor = -1;
     }
     else
     {
-        // Total Reflection
-        velocity_out = velocity_in;
-        if (norm_plane.x != 0)
-            velocity_out.x = -velocity_out.x;
-        else if(norm_plane.y != 0)
-            velocity_out.y = -velocity_out.y;
-        else
-            velocity_out.z = -velocity_out.z;
+        // Usual refraction.
+        factor = sqrt( numerator / denominator );
     }
 
-    return velocity_out;
+    return vector_out = ( vector_on_surface + factor * vector_on_normal ).Unit();
 }

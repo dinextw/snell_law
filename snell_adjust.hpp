@@ -14,18 +14,18 @@
 class SnellAngleAdjust
 {
 private:
-    TVector velocity_in, velocity_out;
-    TVector norm_plane;
-    double speed_cell1, speed_cell2;
+    TVector vector_in, vector_out;
+    TVector plane_normal;
+    double speed_in, speed_out;
 
 public:
-    SnellAngleAdjust() : speed_cell1(0), speed_cell2(0){};
+    SnellAngleAdjust() : speed_in(0), speed_out(0) {};
 
 public:
-    TVector ComputeRefractedVelocity(TVector velocity_cell1,
-                                     TVector norm_plane_vector,
-                                     double  speed_in,
-                                     double  speed_out);
+    TVector ComputeRefractedVelocity(const TVector &vector_in,
+                                     const TVector &plane_normal,
+                                     double         speed_in,
+                                     double         speed_out);
 };
 
 
