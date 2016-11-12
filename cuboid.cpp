@@ -37,12 +37,12 @@ pair<TCoordinate, TVector> Cuboid::ComputePath(TCoordinate position_in, TVector 
 {
     // Compute intersection position
     
-    double factor_multiply_x_high = abs((x_high - position_in.x) / velocity_in.x);
-    double factor_multiply_y_high = abs((y_high - position_in.y) / velocity_in.y);
-    double factor_multiply_z_high = abs((z_high - position_in.z) / velocity_in.z);
-    double factor_multiply_x_low = abs((x_low - position_in.x) / velocity_in.x);
-    double factor_multiply_y_low = abs((y_low - position_in.y) / velocity_in.y);
-    double factor_multiply_z_low = abs((z_low - position_in.z) / velocity_in.z);
+    double factor_multiply_x_high = (x_high - position_in.x) / velocity_in.x;
+    double factor_multiply_y_high = (y_high - position_in.y) / velocity_in.y;
+    double factor_multiply_z_high = (z_high - position_in.z) / velocity_in.z;
+    double factor_multiply_x_low = (x_low - position_in.x) / velocity_in.x;
+    double factor_multiply_y_low = (y_low - position_in.y) / velocity_in.y;
+    double factor_multiply_z_low = (z_low - position_in.z) / velocity_in.z;
     
     TCoordinate position_intersect_x_high = position_in + velocity_in * factor_multiply_x_high;
     TCoordinate position_intersect_y_high = position_in + velocity_in * factor_multiply_y_high;
@@ -54,12 +54,11 @@ pair<TCoordinate, TVector> Cuboid::ComputePath(TCoordinate position_in, TVector 
     // Compute Distance
     
     double distance_x_high = -1;
+    bool boundary_x_high = 0;
     if( position_intersect_x_high.y <= y_high &&
        position_intersect_x_high.y >= y_low &&
        position_intersect_x_high.z <= z_high &&
-       position_intersect_x_high.z >= z_low &&
-       position_intersect_x_high.x <= x_high &&
-       position_intersect_x_high.x >= x_low)
+       position_intersect_x_high.z >= z_low )
     {
         distance_x_high = sqrt(  pow(position_in.x - position_intersect_x_high.x, 2)
                                + pow(position_in.y - position_intersect_x_high.y, 2)
@@ -67,12 +66,11 @@ pair<TCoordinate, TVector> Cuboid::ComputePath(TCoordinate position_in, TVector 
     }
     
     double distance_x_low = -1;
+    bool boundary_x_low = 0;
     if( position_intersect_x_low.y <= y_high &&
        position_intersect_x_low.y >= y_low &&
        position_intersect_x_low.z <= z_high &&
-       position_intersect_x_low.z >= z_low &&
-       position_intersect_x_low.x <= x_high &&
-       position_intersect_x_low.x >= x_low)
+       position_intersect_x_low.z >= z_low )
     {
         distance_x_low = sqrt(  pow(position_in.x - position_intersect_x_low.x, 2)
                               + pow(position_in.y - position_intersect_x_low.y, 2)
@@ -80,12 +78,11 @@ pair<TCoordinate, TVector> Cuboid::ComputePath(TCoordinate position_in, TVector 
     }
     
     double distance_y_high = -1;
+    bool boundary_y_high = 0;
     if( position_intersect_y_high.x >= x_low &&
        position_intersect_y_high.x <= x_high &&
        position_intersect_y_high.z >= z_low &&
-       position_intersect_y_high.z <= z_high &&
-       position_intersect_y_high.y >= y_low &&
-       position_intersect_y_high.y <= y_high)
+       position_intersect_y_high.z <= z_high )
     {
         distance_y_high = sqrt(  pow(position_in.x - position_intersect_y_high.x, 2)
                                + pow(position_in.y - position_intersect_y_high.y, 2)
@@ -93,12 +90,11 @@ pair<TCoordinate, TVector> Cuboid::ComputePath(TCoordinate position_in, TVector 
     }
     
     double distance_y_low = -1;
+    bool boundary_y_low = 0;
     if( position_intersect_y_low.x >= x_low &&
        position_intersect_y_low.x <= x_high &&
        position_intersect_y_low.z >= z_low &&
-       position_intersect_y_low.z <= z_high &&
-       position_intersect_y_low.y >= y_low &&
-       position_intersect_y_low.y <= y_high)
+       position_intersect_y_low.z <= z_high )
     {
         distance_y_low = sqrt(  pow(position_in.x - position_intersect_y_low.x, 2)
                               + pow(position_in.y - position_intersect_y_low.y, 2)
@@ -106,12 +102,11 @@ pair<TCoordinate, TVector> Cuboid::ComputePath(TCoordinate position_in, TVector 
     }
     
     double distance_z_high = -1;
+    bool boundary_z_high = 0;
     if( position_intersect_z_high.x >= x_low &&
        position_intersect_z_high.x <= x_high &&
        position_intersect_z_high.y >= y_low &&
-       position_intersect_z_high.y <= y_high &&
-       position_intersect_z_high.z >= z_low &&
-       position_intersect_z_high.z <= z_high)
+       position_intersect_z_high.y <= y_high )
     {
         distance_z_high = sqrt(  pow(position_in.x - position_intersect_z_high.x, 2)
                                + pow(position_in.y - position_intersect_z_high.y, 2)
@@ -119,12 +114,11 @@ pair<TCoordinate, TVector> Cuboid::ComputePath(TCoordinate position_in, TVector 
     }
     
     double distance_z_low = -1;
+    bool boundary_z_low = 0;
     if( position_intersect_z_low.x >= x_low &&
        position_intersect_z_low.x <= x_high &&
        position_intersect_z_low.y >= y_low &&
-       position_intersect_z_low.y <= y_high &&
-       position_intersect_z_low.z >= z_low &&
-       position_intersect_z_low.z <= z_high)
+       position_intersect_z_low.y <= y_high )
     {
         distance_z_low = sqrt(  pow(position_in.x - position_intersect_z_low.x, 2)
                               + pow(position_in.y - position_intersect_z_low.y, 2)
@@ -175,6 +169,7 @@ pair<TCoordinate, TVector> Cuboid::ComputePath(TCoordinate position_in, TVector 
         default:
             break;
     }
+    
     
     
     return pair<TCoordinate, TVector>(position_out, -norm_plane);
