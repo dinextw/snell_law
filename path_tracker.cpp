@@ -57,7 +57,13 @@ list<TTravelPoint> TrackPath(const TMesh       &mesh,
                                                           curr_speed,
                                                           cell.GetSpeed());
 
-        // Calculate
+        // Position the next cell again,
+        // because the next cell may not be the one we just found
+        // in the total refraction case.
+        if( !FindNextCell(mesh, curr_point, next_way, cell) )
+            break;
+
+        // Calculate next point.
         auto next = cell.ComputePath(curr_point, next_way);
         TCoordinate next_point = next.first;
 
