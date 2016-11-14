@@ -178,27 +178,27 @@ int main(int argc, char *argv[])
                    TCoordinate(0.03125,0.104167,1),
                    TVector(0, 0, 1));
 
-    // Load test mesh 1.
-    TMesh mesh;
-    cout << "Load mesh file : " << mesh.LoadFile("test_speed_profile", true) << endl;
-    PrintMeshData(mesh);
+    // Mesh and path track test.
+    {
+        TMesh mesh;
+        cout << "Load mesh file : " << mesh.LoadFile("test_speed_profile", true) << endl;
+        PrintMeshData(mesh);
 
-    // Travel path track test 1.
-    TestPathTrack(mesh,
-                  TCoordinate(0, 50, 15),
-                  TVector(30, -40, -15),
-                  TCoordinate(30, 10, 0));
-    
-    // Load test mesh 2.
-    TMesh mesh;
-    cout << "Load mesh file : " << mesh.LoadFile("test_speed_profile_total_reflection", true) << endl;
-    PrintMeshData(mesh);
-    
-    // Travel path track test 2.
-    TestPathTrack(mesh,
-                  TCoordinate(0.701115,3.50557,40),
-                  TVector(0.098885,0.49443,8.0823),
-                  TCoordinate(0.7, 3.8, 50));//Approximate Position
+        TestPathTrack(mesh,
+                      TCoordinate(0, 50, 15),
+                      TVector(30, -40, -15),
+                      TCoordinate(30, 10, 0));
+    }
+    {
+        TMesh mesh;
+        cout << "Load mesh file : " << mesh.LoadFile("test_speed_profile_total_reflection", true) << endl;
+        PrintMeshData(mesh);
+
+        TestPathTrack(mesh,
+                      TCoordinate(0.701115,3.50557,40),
+                      TVector(0.098885,0.49443,8.0823),
+                      TCoordinate(0.7, 3.8, 50));//Approximate Position
+    }
 
     return 0;
 }
