@@ -9,6 +9,7 @@
 #include <cmath>
 #include <vector>
 #include <algorithm>
+#include <stdlib.h>
 #include "cuboid.hpp"
 
 using namespace std;
@@ -54,7 +55,6 @@ pair<TCoordinate, TVector> Cuboid::ComputePath(TCoordinate position_in, TVector 
     // Compute Distance
     
     double distance_x_high = -1;
-    bool boundary_x_high = 0;
     if( position_intersect_x_high.y <= y_high &&
        position_intersect_x_high.y >= y_low &&
        position_intersect_x_high.z <= z_high &&
@@ -66,7 +66,6 @@ pair<TCoordinate, TVector> Cuboid::ComputePath(TCoordinate position_in, TVector 
     }
     
     double distance_x_low = -1;
-    bool boundary_x_low = 0;
     if( position_intersect_x_low.y <= y_high &&
        position_intersect_x_low.y >= y_low &&
        position_intersect_x_low.z <= z_high &&
@@ -78,7 +77,6 @@ pair<TCoordinate, TVector> Cuboid::ComputePath(TCoordinate position_in, TVector 
     }
     
     double distance_y_high = -1;
-    bool boundary_y_high = 0;
     if( position_intersect_y_high.x >= x_low &&
        position_intersect_y_high.x <= x_high &&
        position_intersect_y_high.z >= z_low &&
@@ -90,7 +88,6 @@ pair<TCoordinate, TVector> Cuboid::ComputePath(TCoordinate position_in, TVector 
     }
     
     double distance_y_low = -1;
-    bool boundary_y_low = 0;
     if( position_intersect_y_low.x >= x_low &&
        position_intersect_y_low.x <= x_high &&
        position_intersect_y_low.z >= z_low &&
@@ -102,7 +99,6 @@ pair<TCoordinate, TVector> Cuboid::ComputePath(TCoordinate position_in, TVector 
     }
     
     double distance_z_high = -1;
-    bool boundary_z_high = 0;
     if( position_intersect_z_high.x >= x_low &&
        position_intersect_z_high.x <= x_high &&
        position_intersect_z_high.y >= y_low &&
@@ -114,7 +110,6 @@ pair<TCoordinate, TVector> Cuboid::ComputePath(TCoordinate position_in, TVector 
     }
     
     double distance_z_low = -1;
-    bool boundary_z_low = 0;
     if( position_intersect_z_low.x >= x_low &&
        position_intersect_z_low.x <= x_high &&
        position_intersect_z_low.y >= y_low &&
@@ -134,6 +129,13 @@ pair<TCoordinate, TVector> Cuboid::ComputePath(TCoordinate position_in, TVector 
     distance_plane[3] = distance_y_low;
     distance_plane[4] = distance_z_high;
     distance_plane[5] = distance_z_low;
+    
+    // Check if error happened in determining intersaction plane
+    int total_reflection_checker = 0;
+    for (int i = 0; i < 6 ; i++)
+        total_reflection_checker = total_reflection_checker + distance_plane[i];
+    if(total_reflection_checker == -6)
+        abort();
     
     // Output Location
     long index_largest_distance = distance(distance_plane,
